@@ -6,39 +6,121 @@
   </head>
 
   <style>
+        body {
+            margin:0px;
+            padding:0px;
+        }
+
         .person_count {
             background-color:red;
-            width:60%;
+            width:90%;
             position:relative;
             margin:auto;
             float:left;
             font-weight:bold;
-            font-size:16px;
+            font-size:23px;
+            margin:10px;
+            height:50px;
+            text-align: center;
+
         }
+
+
+
+        .video {
+            width: 800px;
+            height:400px;
+            padding:5px.;
+
+        }
+
+        .person_count label {
+            position:relative;
+            margin: auto;
+            color:#FFF;
+            font-weight: bold;
+            font-family: sans-serif;
+
+        }
+
+        .div_btns{
+            width :90%;
+            margin: auto;
+        }
+
+        .btn {
+
+            padding:5px;
+            width: :60px;
+            height: 35px;
+            background-color:#CCC;
+            color:black;
+            font-size:14px;
+        }
+
+        .hidden {
+            display: :none;
+        }
+
+        .div_title {
+            width:100%;
+            text-align:center;
+        }
+
+        .title_program {
+    font-family: sans-serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+        }
+
     </style>
   <body>
 
+    <div class="div_title" >
+    <span class="title_program" > App para Gestão de Casas Compartilhadas </span>
+    </div>
 
+     <video id="preview" class="video" style="display:none" ></video>
 
-     <video id="preview"></video>
-     <div id="cont_last" class="person_count" ></div>
+     <div id="cont_last" class="person_count" >
+         <label> Ultimo Banho à: </button>
+          <label> 2h </button>
+            <label> 10 min </button>
+     </div>
 
-
+    <div id="cont_last" class="div_btns" >
+        <button class="btn" onclick="AtivarCamera()" > Fazer Chek-In </button>
+         <button class="btn" > Visualizar Check-ins Privados </button>
+         <button class="btn" > Criar QR Code Novo Ambiente </button>
+    </div> 
     <script>
 
             
        var cont_last = document.getElementById('cont_last');
 
 
+//var url = document.getElementById('url').value;
 
-        let scanner = new Instascan.Scanner(
+
+function GetData() {
+
+ 		var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", url, false);
+
+}
+
+function AtivarCamera(){
+
+ let scanner = new Instascan.Scanner(
             {
                 video: document.getElementById('preview')
             }
         );
 
         scanner.addListener('scan', function(content) {
-        	FazerCheckIn(content);
+            FazerCheckIn(content);
             
         });
 
@@ -51,16 +133,11 @@
             }
         });
 
+ document.getElementById('preview').style.display = "inline";
 
-//var url = document.getElementById('url').value;
-
-
-function GetData() {
-
- 		var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", url, false);
 
 }
+
 
 function SetData(){
 
