@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Instascan</title>
+    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" ></script>	
+  </head>
+
+  <style>
+        .person_count {
+            background-color:red;
+            width:60%;
+            position:relative;
+            margin:auto;
+            float:left;
+            font-weight:bold;
+            font-size:16px;
+        }
+    </style>
+  <body>
+
+
+
+     <video id="preview"></video>
+     <div id="cont_last" class="person_count" ></div>
+
+
+    <script>
+
+            
+       var cont_last = document.getElementById('cont_last');
+
+
+
+        let scanner = new Instascan.Scanner(
+            {
+                video: document.getElementById('preview')
+            }
+        );
+
+        scanner.addListener('scan', function(content) {
+        	FazerCheckIn(content);
+            
+        });
+
+        Instascan.Camera.getCameras().then(cameras => 
+        {
+            if(cameras.length > 0){
+                scanner.start(cameras[0]);
+            } else {
+                console.error("Não existe câmera no dispositivo!");
+            }
+        });
+
+
+//var url = document.getElementById('url').value;
+
+
+function GetData() {
+
+ 		var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", url, false);
+
+}
+
+function SetData(){
+
+	var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", url, false);
+
+}
+
+function FazerCheckIn(get_ambiente){
+
+	 // cozinha,banheiro ;
+	var user = "";
+	var dt_nw = new Date();
+	var data_hora = dt_nw.getTime();
+
+}
+
+
+    </script>
+
+ </body>
+</html>

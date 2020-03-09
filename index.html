@@ -1,112 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
-<link rel="icon" href="images/favicon.png" />
-<link rel="icon" href="imagens/favicon.png" />
-<link rel="stylesheet" type="text/css" href="css/style.css" media="all" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="url" content="http://www.eduardocomunicacao.com" / >
-<meta name="language" content="portuguese" / >
-<meta name="copyright" content="Eduardo Comunicação" />
-<meta name="robots" content="index,follow" / >
-<meta name="description" content=" Serviços Particulares de Propaganda: Materiais Gráficos, Web Sites Institucionais, Design e Criação, Projetos Especiais - Localização: Colombo - Paraná" / >
-<meta name="keywords" content="Eduardo, Comunicação, Gráfica, Propaganda, WebSite, Design, Criação, Internet, Logo, Cartão de Visita, Panfletos, Colombo, Paraná" / > 
-<meta name="Publisher-Email" content="contato@eduardocomunicacao.com" / > 
-<meta http-equiv="Content-Language" content="PT-BR" / >
-<meta name="author" content="Eduardo Martins" />
-<title>:: Eduardo Comunicação - Desenvolvimento Web ::</title>
-
-</head>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-48617726-1', 'eduardocomunicacao.com');
-  ga('send', 'pageview');
-
-</script>
-
-<script type="text/javascript" src="lightbox/js/jquery-1.11.js"></script>
-<script language="javascript">
-
-	/*function principal1(){
-		
-		$("#principal1").animate({
-			width:'toggle',
-			opacity:'toggle',
-			
-		},1500)
-		setTimeout("fecha1()",4000)
-	}
-	
-	function fecha1(){
-	$("#principal1").animate({
-		width:'toggle',
-		
-	},1500)
-	setTimeout("principal2()", 1500)
-	}
-	function principal2(){
-		
-	$("#principal2").animate({
-		width:'toggle',
-		},1500)	
-		setTimeout("fecha2()",4000)
-	}
-	function fecha2(){
-	$("#principal2").animate({
-		width:'toggle',
-		},1500)
-		setTimeout("principal1()",1500)
-	}*/
-	
-
-</script>
-<body onload="principal1()">
-<div id="pblma">
-  <div id="menu"></div>
-  <div id="filet-menu"></div>
-  <div id="fundo-baixo">
-   <div id="logo"><a href="index.html"><img src="imagens/logo_site.png" alt="Logo Eduardo Comunicação" width="151" height="90" title="Logo Eduardo Comunicação" /></a></div>
-   <div id="sub-menu" class="submenu" ><strong><a href="index.html">Home</a> <a href="servicos.html">Serviços</a> <a href="portfolio.html">Portfólio</a> <a href="contato.html">Contato</a></strong></div>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <div id="principal">
-    <div id="principal1" ></div>
+<html>
+    <head>
+        <script type="text/javascript" src="qrcode.js"></script>
+    </head>
+    <body>
+        <input type="text" id="valor" value="">
+        <button onClick="createQrCode()">Gerar QR Code</button>
+        <div id="qrcode"></div>
+    </body>
+    <script>
     
-    </div>
+    function createQrCode()
+    {
+        var userInput = document.getElementById('valor').value;
+
+        var qrcode = new QRCode("qrcode", {
+            text: userInput,
+            width: 256,
+            height: 256,
+            colorDark: "black",
+            colorLight: "white",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    }
     
-<div id="banner1">
-<img src="imagens/banner1.png" alt="Web Sites Institucionais, com hospedagem inclusa nos planos, e layout personalizado" width="194" height="252" /></div>
-<div id="banner2"><a href="servicos.html"><img src="imagens/banner2.png" alt="prestação de serviços design e web" width="195" height="252" /></a></div>
-<div id="banner3"><a href="contato.html"><img src="imagens/banner3.png" alt="Entre em contato e solicite um orçamento" width="194" height="252" /></a></div>
-
-</div>
-
-</div>
-
-
-<div id="rodape_filet"></div>
-<div id="rodape">
-  <div id="sob-rodape">
-  <div id="face"><a href="http://facebook.com/eduardo.comunicacao"><img src="imagens/face.png" alt="facebook Eduardo Comunicação" width="38" height="42" /></a></div>
-  <div id="logo-rodape"><a href="index.html"><img src="imagens/logo_rod.png" alt="Logo Eduardo Comunicação" width="15" height="14" title="Logo Eduardo Comunicação" /></a></div>
-<div id="icon-cel"><img src="imagens/fone.png" alt="Telefone Celular para contato" width="21" height="29" /></div>
-<div id="texto-celular">9890-1492</div>
-<div id="texto-email">contato@eduardocomunicacao.com</div>
-<div id="icon-email"><img src="imagens/email.png" alt="E-mail para contato" width="22" height="16" /></div>
-
-<div id="direitos">
-  Todos os Direitos Reservados a Eduardo Comunicação Colombo - Paraná
-</div>
-
-</div>
-
-</div>
-
-</body>
+    </script>
 </html>
