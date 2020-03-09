@@ -126,10 +126,19 @@ function AtivarCamera(){
 
         Instascan.Camera.getCameras().then(cameras => 
         {
-            if(cameras.length > 0){
+            console.log(cameras.length);
+            alert(cameras.length);
+            if(cameras.length == 1){
                 scanner.start(cameras[0]);
-            } else {
+                alert(cameras.length);
+               } 
+                else if (cameras.length > 1) {
+                    alert(cameras.length);
+                    scanner.start(cameras[1]);
+                }
+            else {
                 console.error("Não existe câmera no dispositivo!");
+
             }
         });
 
