@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Instascan</title>
+    <title> Gestão de Ambientes Compartilhados </title>
     <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" ></script>	
+
+<script src="jquery-3.4.1.min.js" ></script>
+
+<script src="bootstrap-4.4.1/js/bootstrap.min.js" ></script>
+    <link rel="stylesheet" href="bootstrap-4.4.1/css/bootstrap.min.css">
   </head>
 
   <style>
-        body {
-            margin:0px;
-            padding:0px;
-        }
+      
 
         .person_count {
-            background-color:red;
-            width:90%;
+            background-color:#f98282;
             position:relative;
             margin:auto;
             float:left;
@@ -28,42 +29,19 @@
 
 
         .video {
-            width: 800px;
-            height:400px;
-            padding:5px.;
+            width:90%;
+            padding:5px;
 
         }
 
         .person_count label {
-            position:relative;
-            margin: auto;
             color:#FFF;
             font-weight: bold;
             font-family: sans-serif;
 
         }
 
-        .div_btns{
-            width :90%;
-            margin: auto;
-        }
-
-        .btn {
-
-            padding:5px;
-            width: :60px;
-            height: 35px;
-            background-color:#CCC;
-            color:black;
-            font-size:14px;
-        }
-
-        .hidden {
-            display: :none;
-        }
-
         .div_title {
-            width:100%;
             text-align:center;
         }
 
@@ -77,41 +55,129 @@
 
     </style>
   <body>
+  	<div class="container" >
 
-    <div class="div_title" >
+  	<div class="div_title col-sm-12 col-md-12 col-lg-12" >
     <span class="title_program" > App para Gestão de Casas Compartilhadas </span>
     </div>
+    <div  class="col-sm-12 col-md-12 col-lg-12" >
+    	<video id="preview" class="video" style="display:none" ></video>
+    </div>
+     
 
-     <video id="preview" class="video" style="display:none" ></video>
-
-     <div id="cont_last" class="person_count" >
-         <label> Ultimo Banho à: </button>
-          <label> 2h </button>
-            <label> 10 min </button>
+     <div id="cont_last" class="person_count col-sm-12 col-md-12 col-lg-12" >
+         <label id="exib_return" ></label>
+          
      </div>
 
-    <div id="cont_last" class="div_btns" >
-        <button class="btn" onclick="AtivarCamera()" > Fazer Chek-In </button>
-         <button class="btn" > Visualizar Check-ins Privados </button>
-         <button class="btn" > Criar QR Code Novo Ambiente </button>
+    <div id="cont_last" class="div_btns col-sm-12 col-md-12 col-lg-12" >
+        <button class="btn btn-primary" onclick="AtivarCamera()" > Fazer Chek-In </button>
+         <button class="btn btn-primary" > Visualizar Check-ins Privados </button>
+         <button class="btn btn-primary" > Criar QR Code Novo Ambiente </button>
     </div> 
+
+  		</div>
+
+    
     <script>
 
             
-       var cont_last = document.getElementById('cont_last');
+    var cont_last = document.getElementById('cont_last');
 
 
 //var url = document.getElementById('url').value;
 
+window.load = LoadPage();
+
+
+function LoadPage(){
+
+ var exibe_calculo = CalculoUltimoBanho();
+
+ document.getElementById('exib_return').innerHTML = exibe_calculo;
+    
+}
+
+function CalculoUltimoBanho() {
+    var output = "Ocorreu um erro.";
+    var list = new Array(0);
+    list = GetData();
+    var index = list.length -1;
+    if (list.length > 0) {
+
+	var ultima_data =list[index].data_registro;
+    ultima_data = new Date(ultima_data);
+
+    var data_atual = new Date();
+    var calc = new Date(data_atual - ultima_data); 
+    
+   var hour = calc.getHours();
+   var minutes = calc.getMinutes();
+
+	if (hour >= 24) {
+     output = "O ultimo banho foi a mais de 24 horas.";
+    
+   } else {
+     output = "Ultimo Banho foi à " + hour + "h " + minutes + " min";
+     
+   }
+
+} else {
+output = "Não existem dados gravados.";
+}
+ return output;
+}
+
+function UrlExists(url)
+{
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, true);
+    http.send();
+    alert("status " + http.status)
+    return http.status != 404;
+}
+
+
+      function getAbsoluteUrl(url) {
+      	var a;
+      	 if(!a) a = document.createElement('a');
+         a.href = url;
+         return a.href;
+      }
+        
+
+
+// Sample Result based on the input.
+
 
 function GetData() {
 
- 		var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", url, false);
+var list = new Array(0);
+ var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        list = GetListaObject(this);
+    }
+  };
+
+var myURL= getAbsoluteUrl("/"); //Returns http://stackoverflow.com/;
+
+  var url = myURL + "infos.xml";
+
+  var retorno = UrlExists(url);
+  
+ 	if (retorno) { 
+ 		xhttp.open("GET", url, true);
+  xhttp.send(); 
+	} else {
+		alert("nao existe arquivo");
+	}
+
+  return list;
 
 }
 
-function AtivarCamera(){
+function AtivarCamera() {
 
  let scanner = new Instascan.Scanner(
             {
@@ -126,14 +192,13 @@ function AtivarCamera(){
 
         Instascan.Camera.getCameras().then(cameras => 
         {
-            console.log(cameras.length);
-            alert(cameras.length);
+          
             if(cameras.length == 1){
                 scanner.start(cameras[0]);
-                alert(cameras.length);
+              
                } 
                 else if (cameras.length > 1) {
-                    alert(cameras.length);
+                 
                     scanner.start(cameras[1]);
                 }
             else {
@@ -144,14 +209,13 @@ function AtivarCamera(){
 
  document.getElementById('preview').style.display = "inline";
 
-
 }
 
 
-function SetData(){
+function SetData() {
 
 	var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", url, false);
+    xhttp.open("POST", url, true);
 
 }
 
@@ -164,6 +228,33 @@ function FazerCheckIn(get_ambiente){
 
 }
 
+
+function GetListaObject(data) {
+ 
+  var xmlDoc = data.responseXML;
+  var registros_xml = data.responseXML.documentElement.getElementsByTagName("item");
+
+  var list_data = new Array(0);
+
+    for (var i = registros_xml.length - 1; i >= 0; i--) {
+
+        var usuario = registros_xml[i].getElementsByTagName("usuario");
+        var comodo_id = registros_xml[i].getElementsByTagName("comodo");
+        var data_registro = registros_xml[i].getElementsByTagName("data");
+
+        var item = new ItemRegistro(usuario,comodo_id,data_registro);
+        list_data.push(item);
+    }
+
+    return list_data;
+
+}
+
+function ItemRegistro(usuario,comodo,data_registro){
+var usuario = usuario;
+var comodo = comodo;
+var data_registro = data_registro;
+} 
 
     </script>
 
