@@ -71,7 +71,7 @@
      </div>
 
     <div id="cont_last" class="div_btns col-sm-12 col-md-12 col-lg-12" >
-        <button class="btn btn-primary" onclick="AtivarCamera()" > Fazer Chek-In </button>
+        <button class="btn btn-primary" onclick="FazerCheckIn()" > Fazer Chek-In </button>
          <button class="btn btn-primary" > Visualizar Check-ins Privados </button>
          <button class="btn btn-primary" > Criar QR Code Novo Ambiente </button>
     </div> 
@@ -158,20 +158,17 @@ var list = new Array(0);
     if (this.readyState == 4 && this.status == 200) {
         list = GetListaObject(this);
     }
-  };
+  }
 
 var myURL= getAbsoluteUrl("/"); //Returns http://stackoverflow.com/;
 
   var url = myURL + "infos.xml";
 
-  var retorno = UrlExists(url);
-  
- 	if (retorno) { 
- 		xhttp.open("GET", url, true);
-  xhttp.send(); 
-	} else {
-		alert("nao existe arquivo");
-	}
+ 
+   
+ 	xhttp.open("GET", url, true);
+  	xhttp.send(); 
+	
 
   return list;
 
@@ -186,7 +183,10 @@ function AtivarCamera() {
         );
 
         scanner.addListener('scan', function(content) {
-            FazerCheckIn(content);
+        	if (content != "") {
+			FazerCheckIn(content);
+        	}
+            
             
         });
 
@@ -212,10 +212,31 @@ function AtivarCamera() {
 }
 
 
-function SetData() {
+function SetData(usuario,comodo,data) {
 
+	try {
+
+var url = myURL + "infos.xml";
+
+  
 	var xhttp = new XMLHttpRequest();
     xhttp.open("POST", url, true);
+
+    var content_xml = "<item>" +
+  "<usuario> "+ usuario + "</usuario>" +
+  "<comodo> "+ comodo +"</comodo>" +
+  "<data>"+ data +"</data>" +
+	"</item>";
+
+	xhttp.send(content_xml);
+
+	 var teste = xhttp.status;
+	 console.error(teste);
+
+	} catch (e) {
+console.error(e);
+	}
+	
 
 }
 
@@ -225,6 +246,17 @@ function FazerCheckIn(get_ambiente){
 	var user = "";
 	var dt_nw = new Date();
 	var data_hora = dt_nw.getTime();
+	if (get_ambiente == "") {
+		get_ambiente = "comodo_01";
+	}
+		try {
+
+			SetData("0",get_ambiente,data_hora);
+			alert("check in feito com sucesso !");
+		} catch (e){
+
+		}
+	
 
 }
 
