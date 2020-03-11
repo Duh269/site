@@ -215,7 +215,8 @@ function AtivarCamera() {
 function SetData(usuario,comodo,data) {
 
 	try {
-
+		
+var myURL= getAbsoluteUrl("/");
 var url = myURL + "infos.xml";
 
   
@@ -231,10 +232,10 @@ var url = myURL + "infos.xml";
 	xhttp.send(content_xml);
 
 	 var teste = xhttp.status;
-	 console.error(teste);
+	 
 
 	} catch (e) {
-console.error(e);
+
 	}
 	
 
